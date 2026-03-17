@@ -1,4 +1,4 @@
-package pages;
+package pageobject;
 
 public class AbsPageObject {
 }

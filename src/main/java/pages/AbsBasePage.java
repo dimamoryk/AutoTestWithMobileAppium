@@ -1,4 +1,8 @@
 package pages;
 
-public class AbsPage {
+import pageobject.AbsPageObject;
+
+public abstract class AbsBasePage extends AbsPageObject {
+
+
 }
