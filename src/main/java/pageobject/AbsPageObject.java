@@ -1,4 +1,4 @@
 package pageobject;
 
-public class AbsPageObject {
+public  abstract class AbsPageObject {
 }

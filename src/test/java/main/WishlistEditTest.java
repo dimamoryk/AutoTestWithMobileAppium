@@ -2,6 +2,7 @@ package main;
 
 import com.google.inject.Inject;
 import extensions.AndroidExtension;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pages.EditWishlistPage;
 import pages.LoginPage;
@@ -9,7 +10,7 @@ import pages.MyWishlistsPage;
 
 @SuppressWarnings("unused")
 @ExtendWith(AndroidExtension.class)
-public class WishlistEdit_Test {
+public class WishlistEditTest {
 
     @Inject
     private LoginPage loginPage;
@@ -18,6 +19,7 @@ public class WishlistEdit_Test {
     @Inject
     private EditWishlistPage editWishlistPage;
 
+    @Test
     void editWishlist() {
         loginPage.login("tonyp98", "12345678");
         String wishlistTitle = "Новый год";

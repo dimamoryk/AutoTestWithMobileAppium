@@ -9,7 +9,7 @@ import static io.appium.java_client.AppiumBy.id;
 public class WishlistContent extends AbsComponent<WishlistContent> {
 
     private final ElementsCollection items =
-            root.$$(id("wishlist:id/wishlist_item"))
+            root.$$(id("ru.otus.wishlist:id/wishlist_item"))
                     .as("Списки желаний");
 
     public WishlistContent(SelenideElement root) {

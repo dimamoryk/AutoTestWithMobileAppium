@@ -9,15 +9,15 @@ import static io.appium.java_client.AppiumBy.id;
 public class WishlistItem extends AbsComponent<WishlistItem> {
 
     private final SelenideElement title =
-            root.$(id("wishlist:id/title"))
+            root.$(id("ru.otus.wishlist:id/title"))
                     .as("Заголовок списка желаний");
 
     private final SelenideElement subtitle =
-            root.$(id("wishlist:id/subtitle"))
+            root.$(id("ru.otus.wishlist:id/subtitle"))
                     .as("Подзаголовок списка желаний");
 
     private final SelenideElement editButton =
-            root.$(id("wishlist:id/edit_button"))
+            root.$(id("ru.otus.wishlist:id/edit_button"))
                     .as("Кнопка редактирования списка желаний");
 
     public WishlistItem(SelenideElement root) {

@@ -11,17 +11,19 @@ import static io.appium.java_client.AppiumBy.id;
 @Singleton
 public class LoginPage extends AbsBasePage {
 
+
     private final SelenideElement userNameInputField =
-            $(id("wishlist:id/username_text_input"))
+            $(id("ru.otus.wishlist:id/username_text_input"))
                     .as("Поле ввода имени пользователя");
 
     private final SelenideElement passwordInputField =
-            $(id("wishlist:id/password_text_input"))
+            $(id("ru.otus.wishlist:id/password_text_input"))
                     .as("Поле ввода пароля");
 
     private final SelenideElement logInButton =
-            $(id("wishlist:id/Log_in_button"))
+            $(id("ru.otus.wishlist:id/login_button"))
                     .as("Кнопка входа");
+
 
     public void login(String username, String password) {
         userNameInputField

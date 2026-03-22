@@ -6,21 +6,21 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import factory.AndroidDriverFactory;
 import factory.AndroidDriverModule;
-import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.extension.*;
 import org.openqa.selenium.WebDriver;
 
-@Nullable
+@NullMarked
 public class AndroidExtension implements TestInstancePostProcessor,
         BeforeEachCallback,
-        AfterTestExecutionCallback,
         AfterEachCallback {
 
     private final Injector injector = Guice.createInjector(new AndroidDriverModule());
 
     @Override
     public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
-        injector.injectMembers(this);
+        injector.injectMembers(testInstance);
+
     }
 
     @Override
@@ -30,10 +30,6 @@ public class AndroidExtension implements TestInstancePostProcessor,
         Selenide.open();
     }
 
-    @Override
-    public void afterTestExecution(ExtensionContext context) {
-
-    }
 
     @Override
     public void afterEach(ExtensionContext context) {
