@@ -22,7 +22,7 @@ public class GiftCreationTest {
     @Inject
     private DatabaseUtils databaseUtils;
 
-    private final String testLogin = "gift_creator";
+    private final String testLogin = "tonyp98";
     private final String testPassword = "12345678";
 
     @BeforeEach
@@ -38,7 +38,7 @@ public class GiftCreationTest {
 
         addGiftPage.setTitle("PS5")
                 .setDescription("PlayStation 5")
-                .setUrl("https://example.com/ps5")
+                .setUrl("https://wishlist.ru/ps5")
                 .save();
 
         wishlistDetailsPage.assertGiftExists("PS5");

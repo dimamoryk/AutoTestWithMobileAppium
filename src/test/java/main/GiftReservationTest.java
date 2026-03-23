@@ -23,7 +23,7 @@ public class GiftReservationTest {
     private DatabaseUtils databaseUtils;
 
     private final String ownerLogin = "owner";
-    private final String friendLogin = "friend";
+    private final String friendLogin = "tonyp98";
     private final String testPassword = "12345678";
 
     @BeforeEach
@@ -41,7 +41,6 @@ public class GiftReservationTest {
         giftDetailsPage.reserve();
         giftDetailsPage.assertReserved();
 
-        loginPage.login();
         loginPage.login(ownerLogin, testPassword);
         myWishlistsPage.openWishlistByName("Подарки");
         wishlistDetailsPage.openGift("Книга");

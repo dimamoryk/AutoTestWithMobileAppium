@@ -25,24 +25,20 @@ public class MyWishlistsPage extends AbsBasePage {
         return this;
     }
 
-
     public MyWishlistsPage assertWhishlistSubTitle(int index, String value) {
         getWishlistItem(index).assertSubTitleEqualsTo(value);
         return this;
     }
-
 
     public void pushEditWhishlist(int index) {
         getWishlistItem(index).pushEdit();
 
     }
 
-
     public MyWishlistsPage assertWhishlistTitle(int index, String value) {
         getWishlistItem(index).assertTitleEqualsTo(value);
         return this;
     }
-
 
     private WishlistItem getWishlistItem(int index) {
         return wishlistContent.get(index)
