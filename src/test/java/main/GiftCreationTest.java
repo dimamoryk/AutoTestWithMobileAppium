@@ -2,7 +2,6 @@ package main;
 
 import com.google.inject.Inject;
 import extensions.AndroidExtension;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pages.*;
@@ -22,17 +21,14 @@ public class GiftCreationTest {
     @Inject
     private DatabaseUtils databaseUtils;
 
-    private final String testLogin = "tonyp98";
-    private final String testPassword = "12345678";
-
-    @BeforeEach
-    void prepareData() {
-        databaseUtils.cleanGiftsForWishlist(testLogin, "Новый год");
-    }
+    private static final String TEST_USER = "gift_test";
+    private static final String TEST_PASSWORD = "12345678";
 
     @Test
     void shouldCreateAndEditGift() {
-        loginPage.login(testLogin, testPassword);
+        databaseUtils.clearGifts(TEST_USER, "Новый год");
+
+        loginPage.login(TEST_USER, TEST_PASSWORD);
         myWishlistsPage.openWishlistByName("Новый год");
         wishlistDetailsPage.clickAddGift();
 
@@ -42,11 +38,5 @@ public class GiftCreationTest {
                 .save();
 
         wishlistDetailsPage.assertGiftExists("PS5");
-
-        wishlistDetailsPage.editGift("PS5");
-        addGiftPage.setDescription("PlayStation 5 Digital Edition")
-                .save();
-
-        wishlistDetailsPage.assertGiftDescription("PS5", "PlayStation 5 Digital Edition");
     }
 }

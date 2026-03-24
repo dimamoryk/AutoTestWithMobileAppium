@@ -21,7 +21,7 @@ public class AndroidDriverModule extends AbstractModule {
         UiAutomator2Options options = new UiAutomator2Options();
         options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);
         options.setPlatformName("Android");
-        options.setApp("http://wiremock:8082/wishlist.apk");
+        options.setApp("http://wiremock:8080/wishlist.apk");
         options.fullReset();
         return options;
     }

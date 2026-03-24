@@ -7,8 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import pages.EditWishlistPage;
 import pages.LoginPage;
 import pages.MyWishlistsPage;
+import ru.otus.utils.DatabaseUtils;
 
-@SuppressWarnings("unused")
 @ExtendWith(AndroidExtension.class)
 public class WishlistEditTest {
 
@@ -18,23 +18,31 @@ public class WishlistEditTest {
     private MyWishlistsPage myWishlistsPage;
     @Inject
     private EditWishlistPage editWishlistPage;
+    @Inject
+    private DatabaseUtils databaseUtils;
+
+    private static final String TEST_USER = "wishlist_test";
+    private static final String TEST_PASSWORD = "12345678";
 
     @Test
     void editWishlist() {
-        loginPage.login("tonyp98", "12345678");
-        String wishlistTitle = "Новый год";
-        String newWishlistDescription = "К нам уже не мчится";
+        databaseUtils.updateWishlistDescription(TEST_USER, "К нам мчится, скоро все случится");
+        
+        loginPage.login(TEST_USER, TEST_PASSWORD);
+
         myWishlistsPage
                 .assertNumberOfWishlists(1)
-                .assertWhishlistTitle(1, wishlistTitle)
-                .assertWhishlistSubTitle(1, "К нам мчится, скоро все случится")
-                .pushEditWhishlist(1);
+                .assertWishlistTitle(1, "Новый год")
+                .assertWishlistSubTitle(1, "К нам мчится, скоро все случится")
+                .pushEditWishlist(1);
+
         editWishlistPage
-                .assertEditWishlistTitle("Изменить список желаний")
-                .editDescription(newWishlistDescription);
+                .assertTitle("Изменить список желаний")
+                .editDescription("К нам уже не мчится");
+
         myWishlistsPage
                 .assertNumberOfWishlists(1)
-                .assertWhishlistTitle(1, wishlistTitle)
-                .assertWhishlistSubTitle(1, newWishlistDescription);
+                .assertWishlistTitle(1, "Новый год")
+                .assertWishlistSubTitle(1, "К нам уже не мчится");
     }
 }

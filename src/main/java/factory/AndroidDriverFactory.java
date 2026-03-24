@@ -17,15 +17,16 @@ import java.time.Duration;
 @Singleton
 public class AndroidDriverFactory {
 
-    private EmulatorProvider emulatorProvider;
-    private Capabilities capabilities;
+    private final EmulatorProvider emulatorProvider;
+    private final Capabilities capabilities;
 
     @SneakyThrows
     public WebDriver create() {
         Emulator emulator = emulatorProvider.takeAndGet();
 
         AndroidDriver driver = new AndroidDriver(
-                new URL("http://127.0.0.1:%d".formatted(emulator.getPort())), capabilities);
+                new URL("http://127.0.0.1:%d".formatted(emulator.getPort())),
+                capabilities);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         return driver;
@@ -33,7 +34,8 @@ public class AndroidDriverFactory {
 
     public void quit(WebDriver driver) {
         emulatorProvider.putBack();
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
-

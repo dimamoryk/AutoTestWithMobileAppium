@@ -4,8 +4,7 @@ services:
     image: wiremock/wiremock:3.13.2
     volumes:
       - ./wiremock:/home/wiremock:ro
-    ports:
-      - "8082:8080"
+
   android-1:
     container_name: android-emulator-1
     depends_on:
@@ -19,6 +18,7 @@ services:
       - APPIUM=true
     devices:
       - "/dev/kvm"
+
   android-2:
     container_name: android-emulator-2
     depends_on:

@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import pageobject.AbsPageObject;
 
 @SuppressWarnings("unchecked")
-@AllArgsConstructor
 public abstract class AbsComponent<T extends AbsComponent<T>> extends AbsPageObject {
 
     protected final SelenideElement root;
@@ -15,4 +14,9 @@ public abstract class AbsComponent<T extends AbsComponent<T>> extends AbsPageObj
         root.shouldBe(conditions);
         return (T) this;
     }
+
+    public AbsComponent(SelenideElement root) {
+        this.root = root;
+    }
+
 }

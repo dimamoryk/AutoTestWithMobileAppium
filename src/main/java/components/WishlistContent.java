@@ -8,12 +8,11 @@ import static io.appium.java_client.AppiumBy.id;
 
 public class WishlistContent extends AbsComponent<WishlistContent> {
 
-    private final ElementsCollection items =
-            root.$$(id("ru.otus.wishlist:id/wishlist_item"))
-                    .as("Списки желаний");
+    private final ElementsCollection items;
 
     public WishlistContent(SelenideElement root) {
         super(root);
+        this.items = root.$$(id("ru.otus.wishlist:id/wishlist_item"));
     }
 
     public WishlistItem get(int index) {
@@ -21,8 +20,6 @@ public class WishlistContent extends AbsComponent<WishlistContent> {
     }
 
     public void assertSizeEqualsTo(int expected) {
-        items.shouldHave(
-                size(expected).because("Неожидаемое количество списков желаний"));
-
+        items.shouldHave(size(expected).because("Неожидаемое количество списков желаний"));
     }
 }

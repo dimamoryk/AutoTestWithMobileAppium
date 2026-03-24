@@ -5,13 +5,14 @@ import com.google.inject.Singleton;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.appium.SelenideAppium.$;
+import static io.appium.java_client.AppiumBy.id;
 
 @Singleton
 public class GiftDetailsPage extends AbsBasePage {
 
-    private final SelenideElement reserveButton = $("ru.otus.wishlist:id/reserve_button").as("Кнопка резервирования");
-    private final SelenideElement reservedStatus = $("ru.otus.wishlist:id/reserved_status").as("Статус резервирования");
+    private final SelenideElement reserveButton = $(id("ru.otus.wishlist:id/reserve_button"));
+    private final SelenideElement reservedStatus = $(id("ru.otus.wishlist:id/reserved_status"));
 
     public void reserve() {
         reserveButton.shouldBe(visible).click();
