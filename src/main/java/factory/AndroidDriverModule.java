@@ -11,13 +11,14 @@ import org.openqa.selenium.WebDriver;
 public class AndroidDriverModule extends AbstractModule {
 
     @Provides
-    public WebDriver webDriver(AndroidDriverFactory factory) {
+    @Singleton
+    public WebDriver provideWebDriver(AndroidDriverFactory factory) {
         return factory.create();
     }
 
     @Provides
     @Singleton
-    private Capabilities capabilities() {
+    public Capabilities provideCapabilities() {
         UiAutomator2Options options = new UiAutomator2Options();
         options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);
         options.setPlatformName("Android");

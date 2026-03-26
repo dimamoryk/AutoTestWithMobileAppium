@@ -11,15 +11,13 @@ import org.junit.jupiter.api.extension.*;
 import org.openqa.selenium.WebDriver;
 
 @NullMarked
-public class AndroidExtension implements TestInstancePostProcessor,
-        BeforeEachCallback,
-        AfterEachCallback {
+public class AndroidExtension implements TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback {
 
     private final Injector injector = Guice.createInjector(new AndroidDriverModule());
 
     @Override
     public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
-        injector.injectMembers(testInstance);  // ← важно: testInstance, а не this
+        injector.injectMembers(testInstance);
     }
 
     @Override

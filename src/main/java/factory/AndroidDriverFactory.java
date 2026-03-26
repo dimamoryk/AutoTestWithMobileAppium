@@ -5,7 +5,6 @@ import com.google.inject.Singleton;
 import emulator.Emulator;
 import emulator.EmulatorProvider;
 import io.appium.java_client.android.AndroidDriver;
-import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
@@ -13,12 +12,17 @@ import org.openqa.selenium.WebDriver;
 import java.net.URL;
 import java.time.Duration;
 
-@AllArgsConstructor(onConstructor_ = @Inject)
 @Singleton
 public class AndroidDriverFactory {
 
     private final EmulatorProvider emulatorProvider;
     private final Capabilities capabilities;
+
+    @Inject
+    public AndroidDriverFactory(EmulatorProvider emulatorProvider, Capabilities capabilities) {
+        this.emulatorProvider = emulatorProvider;
+        this.capabilities = capabilities;
+    }
 
     @SneakyThrows
     public WebDriver create() {

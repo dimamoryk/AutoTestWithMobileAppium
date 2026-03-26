@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 @Singleton
 public class EmulatorProvider {
 
-    private final BlockingQueue<Emulator> emulators =
-            new ArrayBlockingQueue<>(Emulator.values().length, false, Arrays.asList(Emulator.values()));
+    private final BlockingQueue<Emulator> emulators = new ArrayBlockingQueue<>(
+            Emulator.values().length, false, Arrays.asList(Emulator.values()));
 
     private final ThreadLocal<Emulator> currentEmulators = new ThreadLocal<>();
 
@@ -27,9 +27,11 @@ public class EmulatorProvider {
         return currentEmulators.get();
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @SneakyThrows
     public void putBack() {
-        emulators.offer(get(), 2, TimeUnit.MINUTES);
+        Emulator current = get();
+        if (current != null) {
+            emulators.offer(current, 2, TimeUnit.MINUTES);
+        }
     }
 }
