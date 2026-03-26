@@ -18,7 +18,7 @@
         <junit.version>6.0.2</junit.version>
         <guice.version>7.0.0</guice.version>
         <guava.version>33.5.0-android</guava.version>
-        <lombok.version>1.18.42</lombok.version>
+        <lombok.version>1.18.34</lombok.version>
         <selenide.version>7.14.0</selenide.version>
         <spotbugs.version>4.9.8.2</spotbugs.version>
         <checkstyle.version>3.6.0</checkstyle.version>

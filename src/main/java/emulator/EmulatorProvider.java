@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 @Singleton
 public class EmulatorProvider {
 
-    private final BlockingQueue<Emulator> emulators = new ArrayBlockingQueue<>(
-            Emulator.values().length, false, Arrays.asList(Emulator.values()));
+    private final BlockingQueue<Emulator> emulators =
+            new ArrayBlockingQueue<>(Emulator.values().length, false, Arrays.asList(Emulator.values()));
 
     private final ThreadLocal<Emulator> currentEmulators = new ThreadLocal<>();
 
