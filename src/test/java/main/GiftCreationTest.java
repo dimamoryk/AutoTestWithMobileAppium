@@ -26,8 +26,9 @@ public class GiftCreationTest {
 
     @Test
     void shouldCreateAndEditGift() {
-        databaseUtils.clearGifts(TEST_USER, "Новый год");
+        databaseUtils.clearGiftsForWishlist(TEST_USER, "Новый год");
 
+        // ACT
         loginPage.login(TEST_USER, TEST_PASSWORD);
         myWishlistsPage.openWishlistByName("Новый год");
         wishlistDetailsPage.clickAddGift();
@@ -37,6 +38,14 @@ public class GiftCreationTest {
                 .setUrl("https://wishlist.ru/ps5")
                 .save();
 
+        // ASSERT
         wishlistDetailsPage.assertGiftExists("PS5");
+
+        // ACT — редактирование
+        wishlistDetailsPage.editGift("PS5");
+        addGiftPage.setDescription("PlayStation 5 Digital Edition").save();
+
+        // ASSERT
+        wishlistDetailsPage.assertGiftDescription("PS5", "PlayStation 5 Digital Edition");
     }
 }

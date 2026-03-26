@@ -11,24 +11,22 @@ import java.util.Objects;
 @Singleton
 public class DatabaseUtils {
 
-    private final String url;
-    private final String username;
-    private final String password;
+    private final String url = Objects.requireNonNull(
+            System.getProperty("database.url"),
+            "❌ Укажите URL БД в проперти database.url"
+    );
 
-    public DatabaseUtils() {
-        this.url = Objects.requireNonNull(
-                System.getProperty("database.url"),
-                "Укажите URL БД в проперти database.url"
-        );
-        this.username = Objects.requireNonNull(
-                System.getProperty("database.username"),
-                "Укажите логин БД в проперти database.username"
-        );
-        this.password = Objects.requireNonNull(
-                System.getProperty("database.password"),
-                "Укажите пароль БД в проперти database.password"
-        );
-    }
+    // username получает database.username
+    private final String username = Objects.requireNonNull(
+            System.getProperty("database.username"),
+            "❌ Укажите логин БД в проперти database.username"
+    );
+
+    // password получает database.password
+    private final String password = Objects.requireNonNull(
+            System.getProperty("database.password"),
+            "❌ Укажите пароль БД в проперти database.password"
+    );
 
     @SneakyThrows
     public void updateWishlistDescription(String username, String description) {
@@ -42,7 +40,7 @@ public class DatabaseUtils {
     }
 
     @SneakyThrows
-    public void clearGifts(String username, String wishlistName) {
+    public void clearGiftsForWishlist(String username, String wishlistName) {
         String sql = "DELETE FROM gifts WHERE wishlist_id IN (SELECT id FROM wishlists WHERE user_id = (SELECT id FROM users WHERE username = ?) AND name = ?)";
         try (Connection conn = DriverManager.getConnection(url, this.username, this.password);
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -53,8 +51,7 @@ public class DatabaseUtils {
     }
 
     @SneakyThrows
-    public void resetGiftReservation(String username, String wishlistName, String giftTitle) {
-        // Используем is_reserved, а не reserved_by
+    public void clearReservation(String username, String wishlistName, String giftTitle) {
         String sql = "UPDATE gifts SET is_reserved = false WHERE wishlist_id IN (SELECT id FROM wishlists WHERE user_id = (SELECT id FROM users WHERE username = ?) AND name = ?) AND title = ?";
         try (Connection conn = DriverManager.getConnection(url, this.username, this.password);
              PreparedStatement ps = conn.prepareStatement(sql)) {

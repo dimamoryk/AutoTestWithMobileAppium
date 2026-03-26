@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'main', description: 'Ветка репозитория')
+        choice(name: 'EMULATOR', choices: ['android-12', 'android-14'], description: 'Эмулятор')
+        string(name: 'DATABASE_URL', defaultValue: 'jdbc:postgresql://sql.otus.kartushin.su:5432/wishlist', description: 'URL БД')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${params.BRANCH}",
+                    url: 'https://github.com/dimamoryk/AutoTestWithMobileAppium.git',
+                    credentialsId: 'github-credentials'
+            }
+        }
+        stage('Run Mobile Tests') {
+            steps {
+                script {
+                    def appiumPort = (params.EMULATOR == 'android-12') ? '4723' : '4724'
+                    sh """
+                        mvn clean test \
+                            -Dappium.port=${appiumPort} \
+                            -DdatabaseUrl=${params.DATABASE_URL}
+                    """
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

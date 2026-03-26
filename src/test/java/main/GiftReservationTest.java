@@ -27,19 +27,24 @@ public class GiftReservationTest {
 
     @Test
     void shouldReserveGift() {
-        databaseUtils.resetGiftReservation(OWNER_USER, "Подарки", "Книга");
+        // ARRANGE — только сброс статуса резервирования
+        databaseUtils.clearReservation(OWNER_USER, "Подарки", "Книга");
 
-        // Резервирование подарка другом
+        // ACT — резервирование подарка другом
         loginPage.login(FRIEND_USER, TEST_PASSWORD);
         myWishlistsPage.openUserWishlist(OWNER_USER);
         wishlistDetailsPage.openGift("Книга");
         giftDetailsPage.reserve();
+
+        // ASSERT
         giftDetailsPage.assertReserved();
 
-        // Проверка от имени владельца
+        // ACT — проверка от имени владельца
         loginPage.login(OWNER_USER, TEST_PASSWORD);
         myWishlistsPage.openWishlistByName("Подарки");
         wishlistDetailsPage.openGift("Книга");
+
+        // ASSERT
         giftDetailsPage.assertReservedBy(FRIEND_USER);
     }
 }

@@ -26,8 +26,10 @@ public class WishlistEditTest {
 
     @Test
     void editWishlist() {
+        // ARRANGE — подготовка данных
         databaseUtils.updateWishlistDescription(TEST_USER, "К нам мчится, скоро все случится");
-        
+
+        // ACT
         loginPage.login(TEST_USER, TEST_PASSWORD);
 
         myWishlistsPage
@@ -40,6 +42,7 @@ public class WishlistEditTest {
                 .assertTitle("Изменить список желаний")
                 .editDescription("К нам уже не мчится");
 
+        // ASSERT
         myWishlistsPage
                 .assertNumberOfWishlists(1)
                 .assertWishlistTitle(1, "Новый год")

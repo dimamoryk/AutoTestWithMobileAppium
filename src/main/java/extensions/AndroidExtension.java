@@ -19,8 +19,7 @@ public class AndroidExtension implements TestInstancePostProcessor,
 
     @Override
     public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
-        injector.injectMembers(testInstance);
-
+        injector.injectMembers(testInstance);  // ← важно: testInstance, а не this
     }
 
     @Override
@@ -29,7 +28,6 @@ public class AndroidExtension implements TestInstancePostProcessor,
         WebDriverRunner.setWebDriver(driver);
         Selenide.open();
     }
-
 
     @Override
     public void afterEach(ExtensionContext context) {
