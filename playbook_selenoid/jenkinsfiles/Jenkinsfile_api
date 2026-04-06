@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'main', description: 'Ветка репозитория')
+        string(name: 'WIREMOCK_URL', defaultValue: 'http://wiremock:8080', description: 'URL Wiremock')
+        string(name: 'TEST_SUITE', defaultValue: '', description: 'Конкретный тестовый класс')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${params.BRANCH}",
+                    url: 'https://github.com/dimamoryk/AutotestWithStubApi1.git',
+                    credentialsId: 'github-credentials'
+            }
+        }
+        stage('Run API Tests') {
+            steps {
+                sh """
+                    mvn clean test \
+                        -Dwiremock.url=${params.WIREMOCK_URL} \
+                        ${params.TEST_SUITE ? "-Dtest=${params.TEST_SUITE}" : ""}
+                """
+            }
+        }
+        stage('Publish Reports') {
+            steps {
+                publishHTML([
+                    reportDir: 'target/surefire-reports',
+                    reportFiles: '*.html',
+                    reportName: 'API Test Reports'
+                ])
+                junit 'target/surefire-reports/*.xml'
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

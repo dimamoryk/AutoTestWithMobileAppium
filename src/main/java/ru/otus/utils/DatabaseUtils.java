@@ -11,22 +11,24 @@ import java.util.Objects;
 @Singleton
 public class DatabaseUtils {
 
-    private final String url = Objects.requireNonNull(
-            System.getProperty("database.url"),
-            "❌ Укажите URL БД в проперти database.url"
-    );
+    private final String url;
+    private final String username;
+    private final String password;
 
-    // username получает database.username
-    private final String username = Objects.requireNonNull(
-            System.getProperty("database.username"),
-            "❌ Укажите логин БД в проперти database.username"
-    );
-
-    // password получает database.password
-    private final String password = Objects.requireNonNull(
-            System.getProperty("database.password"),
-            "❌ Укажите пароль БД в проперти database.password"
-    );
+    public DatabaseUtils() {
+        this.url = Objects.requireNonNull(
+                System.getProperty("database.url"),
+                "❌ Укажите database.url"
+        );
+        this.username = Objects.requireNonNull(
+                System.getProperty("database.username"),
+                "❌ Укажите database.username"
+        );
+        this.password = Objects.requireNonNull(
+                System.getProperty("database.password"),
+                "❌ Укажите database.password"
+        );
+    }
 
     @SneakyThrows
     public void updateWishlistDescription(String username, String description) {

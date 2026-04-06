@@ -21,30 +21,23 @@ public class GiftReservationTest {
     @Inject
     private DatabaseUtils databaseUtils;
 
-    private static final String OWNER_USER = "owner";
-    private static final String FRIEND_USER = "reservation_test";
-    private static final String TEST_PASSWORD = "12345678";
+    private static final String OWNER = "owner";
+    private static final String FRIEND = "reservation_test";
+    private static final String PASSWORD = "12345678";
 
     @Test
     void shouldReserveGift() {
-        // ARRANGE — только сброс статуса резервирования
-        databaseUtils.clearReservation(OWNER_USER, "Подарки", "Книга");
+        databaseUtils.clearReservation(OWNER, "Подарки", "Книга");
 
-        // ACT — резервирование подарка другом
-        loginPage.login(FRIEND_USER, TEST_PASSWORD);
-        myWishlistsPage.openUserWishlist(OWNER_USER);
+        loginPage.login(FRIEND, PASSWORD);
+        myWishlistsPage.openUserWishlist(OWNER);
         wishlistDetailsPage.openGift("Книга");
         giftDetailsPage.reserve();
-
-        // ASSERT
         giftDetailsPage.assertReserved();
 
-        // ACT — проверка от имени владельца
-        loginPage.login(OWNER_USER, TEST_PASSWORD);
+        loginPage.login(OWNER, PASSWORD);
         myWishlistsPage.openWishlistByName("Подарки");
         wishlistDetailsPage.openGift("Книга");
-
-        // ASSERT
-        giftDetailsPage.assertReservedBy(FRIEND_USER);
+        giftDetailsPage.assertReservedBy(FRIEND);
     }
 }

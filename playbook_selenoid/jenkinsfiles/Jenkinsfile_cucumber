@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'main', description: 'Ветка репозитория')
+        string(name: 'FEATURE', defaultValue: '', description: 'Конкретный feature файл')
+        choice(name: 'TAGS', choices: ['@smoke', '@regression', '@all'], description: 'Теги')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${params.BRANCH}",
+                    url: 'https://github.com/dimamoryk/AutotestWithCucumber.git',
+                    credentialsId: 'github-credentials'
+            }
+        }
+        stage('Run Cucumber Tests') {
+            steps {
+                script {
+                    def cmd = "mvn clean test"
+                    if (params.FEATURE) {
+                        cmd += " -Dcucumber.features=${params.FEATURE}"
+                    }
+                    if (params.TAGS != '@all') {
+                        cmd += " -Dcucumber.filter.tags=${params.TAGS}"
+                    }
+                    sh cmd
+                }
+            }
+        }
+    }
+}

@@ -45,7 +45,7 @@ public class WishlistDetailsPage extends AbsBasePage {
                 item.assertTitleEqualsTo(title);
                 return item;
             } catch (AssertionError e) {
-                // Продолжаем поиск, ошибку не логируем
+
             }
         }
         throw new AssertionError("Подарок с названием '" + title + "' не найден");
